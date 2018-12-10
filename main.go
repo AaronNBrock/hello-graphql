@@ -224,7 +224,7 @@ func main() {
 				Description: "The created_at date of the author.",
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					if author, ok := p.Source.(*Author); ok {
-						return author.CreatedAt, nil
+						return author.CreatedAt.Format("2006-01-02"), nil
 					}
 
 					return nil, nil
@@ -275,7 +275,7 @@ func main() {
 				Description: "The created_at date of the post.",
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					if post, ok := p.Source.(*Post); ok {
-						return post.CreatedAt, nil
+						return post.CreatedAt.Format("2006-01-02"), nil
 					}
 
 					return nil, nil
