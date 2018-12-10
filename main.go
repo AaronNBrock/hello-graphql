@@ -414,7 +414,7 @@ func main() {
 
 			// Post
 			"createPost": &graphql.Field{
-				Type: authorType,
+				Type: postType,
 				Description: "Create a new post.",
 				Args: graphql.FieldConfigArgument{
 					"title":  &graphql.ArgumentConfig{
