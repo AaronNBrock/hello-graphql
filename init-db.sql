@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS authors (
     id serial PRIMARY KEY,
     name varchar(100) NOT NULL,
     email varchar(150) NOT NULL,
-    created_at date NOT NULL DEFAULT CURRENT_DATE
+    created_at DATE NOT NULL DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE IF NOT EXISTS posts (
