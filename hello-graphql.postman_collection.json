@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"query { authors { id, name, email, created_at } }\"\n}"
+					"raw": "{\n\t\"query\": \"query { authors { id, name, email, createdAt } }\"\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -48,7 +48,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"query { posts { id, title, content, author { name }, created_at } }\"\n}"
+					"raw": "{\n\t\"query\": \"query { posts { id, title, content, author { name }, createdAt } }\"\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -77,7 +77,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"query queryAuthor($id: Int!) { author(id: $id) { id, name, email, created_at } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
+					"raw": "{\n\t\"query\": \"query queryAuthor($id: Int!) { author(id: $id) { id, name, email, createdAt } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -106,7 +106,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"query queryPost($id: Int!) { post(id: $id) { id, title, content, author { name }, created_at } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
+					"raw": "{\n\t\"query\": \"query queryPost($id: Int!) { post(id: $id) { id, title, content, author { name }, createdAt } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -135,7 +135,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"mutation createAuthor($name: String!, $email: String!) { createAuthor(name: $name, email: $email) { id, name, email, created_at } }\",\n\t\"variables\": {\n\t\t\"name\":  \"Aaron N. Brock\",\n\t\t\"email\": \"Contact@AaronNBrock.com\"\n\t}\n}"
+					"raw": "{\n\t\"query\": \"mutation createAuthor($name: String!, $email: String!) { createAuthor(name: $name, email: $email) { id, name, email, createdAt } }\",\n\t\"variables\": {\n\t\t\"name\":  \"Aaron N. Brock\",\n\t\t\"email\": \"Contact@AaronNBrock.com\"\n\t}\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -164,7 +164,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"mutation createPost($title: String!, $content: String!, $authorID: Int!) { createPost(title: $title, content: $content, authorID: $authorID) { id, title, content, author { name }, created_at } }\",\n\t\"variables\": {\n\t\t\"title\":  \"My First Title\",\n\t\t\"content\": \"And this is Content\",\n\t\t\"authorID\": 1\n\t}\n}"
+					"raw": "{\n\t\"query\": \"mutation createPost($title: String!, $content: String!, $authorID: Int!) { createPost(title: $title, content: $content, authorID: $authorID) { id, title, content, author { name }, createdAt } }\",\n\t\"variables\": {\n\t\t\"title\":  \"My First Title\",\n\t\t\"content\": \"And this is Content\",\n\t\t\"authorID\": 1\n\t}\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",

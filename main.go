@@ -23,7 +23,7 @@ type Author struct {
 	ID        int       `json:"id"`
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"created_at"`
+	CreatedAt time.Time `json:"createdAt"`
 }
 
 // Post ...
@@ -31,8 +31,8 @@ type Post struct {
 	ID        int       `json:"id"`
 	Title     string    `json:"title"`
 	Content   string    `json:"content"`
-	AuthorID  int       `json:"author_id"`
-	CreatedAt time.Time `json:"created_at"`
+	AuthorID  int       `json:"authorID"`
+	CreatedAt time.Time `json:"createdAt"`
 }
 
 var graphqlHandler http.Handler
@@ -218,9 +218,9 @@ func init() {
 					return nil, nil
 				},
 			},
-			"created_at": &graphql.Field{
+			"createdAt": &graphql.Field{
 				Type:        graphql.NewNonNull(graphql.String),
-				Description: "The created_at date of the author.",
+				Description: "The createdAt date of the author.",
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					if author, ok := p.Source.(*Author); ok {
 						return author.CreatedAt, nil
@@ -269,9 +269,9 @@ func init() {
 					return nil, nil
 				},
 			},
-			"created_at": &graphql.Field{
+			"createdAt": &graphql.Field{
 				Type:        graphql.NewNonNull(graphql.String),
-				Description: "The created_at date of the post.",
+				Description: "The createdAt date of the post.",
 				Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 					if post, ok := p.Source.(*Post); ok {
 						return post.CreatedAt, nil
