@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a5a2a658-514a-4232-a180-737c4c7faaf3",
+		"_postman_id": "5351c3d8-2149-415e-8e71-c9a6f86a3c17",
 		"name": "hello-graphql",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"{ authors { id, name, email, created_at } }\"\n}"
+					"raw": "{\n\t\"query\": \"query { authors { id, name, email, created_at } }\"\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -48,7 +48,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"{ authors { id, name, email, created_at } }\"\n}"
+					"raw": "{\n\t\"query\": \"query { posts { id, title, content, author { name }, created_at } }\"\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -106,7 +106,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"query queryAuthor($id: Int!) { author(id: $id) { id, name, email, created_at } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
+					"raw": "{\n\t\"query\": \"query queryPost($id: Int!) { post(id: $id) { id, title, content, author { name }, created_at } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -164,7 +164,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"mutation createAuthor($name: String!, $email: String!) { createAuthor(name: $name, email: $email) { id, name, email, created_at } }\",\n\t\"variables\": {\n\t\t\"name\":  \"Aaron N. Brock\",\n\t\t\"email\": \"Contact@AaronNBrock.com\"\n\t}\n}"
+					"raw": "{\n\t\"query\": \"mutation createPost($title: String!, $content: String!, $authorID: Int!) { createPost(title: $title, content: $content, authorID: $authorID) { id, title, content, author { name }, created_at } }\",\n\t\"variables\": {\n\t\t\"title\":  \"My First Title\",\n\t\t\"content\": \"And this is Content\",\n\t\t\"authorID\": 1\n\t}\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
@@ -222,7 +222,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"query\": \"mutation deleteAuthor($id: Int!) { deleteAuthor(id: $id) }\",\n\t\"variables\": {\n\t\t\"id\":  2\n\t}\n}"
+					"raw": "{\n\t\"query\": \"mutation deletePost($id: Int!) { deletePost(id: $id) }\",\n\t\"variables\": {\n\t\t\"id\":  2\n\t}\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/graphql",
