@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-	"github.com/graphql-go/handler"
+
 	"github.com/graphql-go/graphql"
+	"github.com/graphql-go/handler"
 	_ "github.com/lib/pq"
 )
 
@@ -112,8 +113,8 @@ func queryAuthors(db *sql.DB) ([]*Author, error) {
 // Post
 func createPost(db *sql.DB, title string, content string, authorID int) (*Post, error) {
 	post := &Post{
-		Title: title,
-		Content: content,
+		Title:    title,
+		Content:  content,
 		AuthorID: authorID,
 	}
 
@@ -368,11 +369,11 @@ func init() {
 	})
 
 	rootMutation := graphql.NewObject(graphql.ObjectConfig{
-		Name:   "RootMutation",
+		Name: "RootMutation",
 		Fields: graphql.Fields{
 			// Author
 			"createAuthor": &graphql.Field{
-				Type: authorType,
+				Type:        authorType,
 				Description: "Create a new author.",
 				Args: graphql.FieldConfigArgument{
 					"name": &graphql.ArgumentConfig{
@@ -394,7 +395,7 @@ func init() {
 				},
 			},
 			"deleteAuthor": &graphql.Field{
-				Type: graphql.Boolean,
+				Type:        graphql.Boolean,
 				Description: "Delete post.",
 				Args: graphql.FieldConfigArgument{
 					"id": &graphql.ArgumentConfig{
@@ -413,10 +414,10 @@ func init() {
 
 			// Post
 			"createPost": &graphql.Field{
-				Type: postType,
+				Type:        postType,
 				Description: "Create a new post.",
 				Args: graphql.FieldConfigArgument{
-					"title":  &graphql.ArgumentConfig{
+					"title": &graphql.ArgumentConfig{
 						Type: graphql.NewNonNull(graphql.String),
 					},
 					"content": &graphql.ArgumentConfig{
@@ -439,7 +440,7 @@ func init() {
 				},
 			},
 			"deletePost": &graphql.Field{
-				Type: graphql.Boolean,
+				Type:        graphql.Boolean,
 				Description: "Delete post.",
 				Args: graphql.FieldConfigArgument{
 					"id": &graphql.ArgumentConfig{
@@ -472,7 +473,7 @@ func init() {
 }
 
 func main() {
-	
+
 	// serve HTTP
 	http.Handle("/graphql", graphqlHandler)
 	http.ListenAndServe(":8080", nil)
