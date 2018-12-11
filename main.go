@@ -5,11 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
-
 	"github.com/graphql-go/handler"
-
 	"github.com/graphql-go/graphql"
-
 	_ "github.com/lib/pq"
 )
 
@@ -37,6 +34,8 @@ type Post struct {
 	AuthorID  int       `json:"author_id"`
 	CreatedAt time.Time `json:"created_at"`
 }
+
+var graphqlHandler http.Handler
 
 func checkErr(err error) {
 	if err != nil {
@@ -175,12 +174,12 @@ func queryPosts(db *sql.DB) ([]*Post, error) {
 	return posts, err
 }
 
-func main() {
+func init() {
 	dbinfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName)
 
 	db, err := sql.Open("postgres", dbinfo)
 	checkErr(err)
-	defer db.Close()
+	// defer db.Close()
 
 	authorType := graphql.NewObject(graphql.ObjectConfig{
 		Name:        "Author",
@@ -464,14 +463,17 @@ func main() {
 		Mutation: rootMutation,
 	})
 
-	h := handler.New(&handler.Config{
+	graphqlHandler = handler.New(&handler.Config{
 		Schema:   &schema,
 		Pretty:   true,
 		GraphiQL: true,
 	})
 
-	// serve HTTP
-	http.Handle("/graphql", h)
-	http.ListenAndServe(":8080", nil)
+}
 
+func main() {
+	
+	// serve HTTP
+	http.Handle("/graphql", graphqlHandler)
+	http.ListenAndServe(":8080", nil)
 }
