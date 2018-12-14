@@ -1,5 +1,14 @@
 #/bin/bash
 
+# Defaults
+host="localhost"
+port="5432"
+username="postgres"
+password="password"
+new_username="graphql"
+new_password="password"
+
+# Parse Options
 OPTIONS=hH:p:u:p:
 LONGOPTIONS=help,host:,port:,username:,password:,new-username:,new-password:
 
@@ -8,12 +17,12 @@ USAGE: ./initdb.sh [OPTIONS]
 
 Options:
  -h  --help            Display this message.
- -H, --host            The postgres host ip. (default 'localhost')
- -p, --port            The port to connect to. (default '5432')
- -u, --username        The username to connect with. (default 'postgres')
- -P, --password        The password to connect with. (default 'password')
-     --new-username    The new username. (default 'graphql')
-     --new-password    The new password. (default 'password')
+ -H, --host            The postgres host ip. (default '$host')
+ -p, --port            The port to connect to. (default '$port')
+ -u, --username        The username to connect with. (default '$username')
+ -P, --password        The password to connect with. (default '$password')
+     --new-username    The new username. (default '$new_username')
+     --new-password    The new password. (default '$new_password')
 "
 
 PARSED=$(getopt --options=$OPTIONS --longoptions=$LONGOPTIONS --name "$0" -- "$@")
@@ -58,30 +67,6 @@ while true; do
 			;;
 	esac
 done
-
-if [ -z ${host+x} ]; then
-	host="localhost"
-fi
-
-if [ -z ${port+x} ]; then
-	port="5432"
-fi
-
-if [ -z ${username+x} ]; then
-	username="postgres"
-fi
-
-if [ -z ${password+x} ]; then
-	password="password"
-fi
-
-if [ -z ${new_username+x} ]; then
-	new_username="graphql"
-fi
-
-if [ -z ${new_password+x} ]; then
-	new_password="password"
-fi
 
 
 # Wait for connection
