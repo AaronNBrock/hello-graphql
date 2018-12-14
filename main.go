@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/graphql-go/graphql"
@@ -11,13 +12,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-const (
-	dbHost     = "localhost"
-	dbPort     = "5432"
-	dbUser     = "graphql"
-	dbPassword = "password"
-	dbName     = "graphql"
-)
 
 // Author ...
 type Author struct {
@@ -176,7 +170,20 @@ func queryPosts(db *sql.DB) ([]*Post, error) {
 }
 
 func init() {
-	dbinfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName)
+	// Define defaults
+	dbHost := "localhost"
+	dbPort := "5432"
+	dbUser := "graphql"
+	dbPass := "password"
+	dbName := "graphql"
+
+	if env := os.Getenv("DB_HOST"); env == "" { dbHost = env }
+	if env := os.Getenv("DB_PORT"); env == "" { dbPort = env }
+	if env := os.Getenv("DB_USER"); env == "" { dbUser = env }
+	if env := os.Getenv("DB_PASS"); env == "" { dbPass = env }
+	if env := os.Getenv("DB_NAME"); env == "" { dbName = env }
+
+	dbinfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPass, dbName)
 
 	db, err := sql.Open("postgres", dbinfo)
 	checkErr(err)
