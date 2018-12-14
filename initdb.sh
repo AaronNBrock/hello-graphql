@@ -1,7 +1,7 @@
 #/bin/bash
 
 OPTIONS=hH:p:u:p:
-LONGOPTS=help,hostname:,port:,username:,password:
+LONGOPTIONS=help,host:,port:,username:,password:,new-username:,new-password:
 
 USAGE="
 USAGE: ./initdb.sh [OPTIONS]
