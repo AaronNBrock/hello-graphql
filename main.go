@@ -479,6 +479,10 @@ func init() {
 
 }
 
+func GraphqlFunc(w http.ResponseWriter, r *http.Request) {
+	graphqlHandler.ServeHTTP(w, r)
+}
+
 func main() {
 
 	// serve HTTP
