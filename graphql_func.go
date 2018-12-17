@@ -1,4 +1,4 @@
-package main
+package hellographql
 
 import (
 	"database/sql"
@@ -11,7 +11,6 @@ import (
 	"github.com/graphql-go/handler"
 	_ "github.com/lib/pq"
 )
-
 
 // Author ...
 type Author struct {
@@ -86,6 +85,7 @@ func queryAuthor(db *sql.DB, authorID int) (*Author, error) {
 }
 
 func queryAuthors(db *sql.DB) ([]*Author, error) {
+	fmt.Println("Executing query")
 	rows, err := db.Query("SELECT id, name, email, created_at FROM authors;")
 
 	if err != nil {
@@ -93,6 +93,7 @@ func queryAuthors(db *sql.DB) ([]*Author, error) {
 	}
 	var authors []*Author
 
+	fmt.Println("Starting scan")
 	for rows.Next() {
 		author := &Author{}
 		err = rows.Scan(&author.ID, &author.Name, &author.Email, &author.CreatedAt)
@@ -101,6 +102,7 @@ func queryAuthors(db *sql.DB) ([]*Author, error) {
 		}
 		authors = append(authors, author)
 	}
+	fmt.Println("Returning authors")
 	return authors, err
 }
 
@@ -177,11 +179,21 @@ func init() {
 	dbPass := "password"
 	dbName := "graphql"
 
-	if env := os.Getenv("DB_HOST"); env != "" { dbHost = env }
-	if env := os.Getenv("DB_PORT"); env != "" { dbPort = env }
-	if env := os.Getenv("DB_USER"); env != "" { dbUser = env }
-	if env := os.Getenv("DB_PASS"); env != "" { dbPass = env }
-	if env := os.Getenv("DB_NAME"); env != "" { dbName = env }
+	if env := os.Getenv("DB_HOST"); env != "" {
+		dbHost = env
+	}
+	if env := os.Getenv("DB_PORT"); env != "" {
+		dbPort = env
+	}
+	if env := os.Getenv("DB_USER"); env != "" {
+		dbUser = env
+	}
+	if env := os.Getenv("DB_PASS"); env != "" {
+		dbPass = env
+	}
+	if env := os.Getenv("DB_NAME"); env != "" {
+		dbName = env
+	}
 
 	dbinfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPass, dbName)
 
@@ -332,7 +344,7 @@ func init() {
 				Description: "Get list of all authors.",
 				Resolve: func(params graphql.ResolveParams) (interface{}, error) {
 					// ToDo deal with ok
-
+					fmt.Println("About to query authors")
 					authors, err := queryAuthors(db)
 					checkErr(err)
 
@@ -484,8 +496,6 @@ func GraphqlFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
-	// serve HTTP
 	http.Handle("/graphql", graphqlHandler)
 	http.ListenAndServe(":8080", nil)
 }
