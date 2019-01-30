@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5351c3d8-2149-415e-8e71-c9a6f86a3c17",
+		"_postman_id": "d9280d4b-744c-40bd-a8c6-a094030e8372",
 		"name": "hello-graphql",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -22,40 +22,10 @@
 					"raw": "{\n\t\"query\": \"query { authors { id, name, email, createdAt } }\"\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/graphql",
+					"raw": "{{host}}/graphql",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8080",
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Query Posts",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"query\": \"query { posts { id, title, content, author { name }, createdAt } }\"\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/graphql",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
 					"path": [
 						"graphql"
 					]
@@ -80,40 +50,10 @@
 					"raw": "{\n\t\"query\": \"query queryAuthor($id: Int!) { author(id: $id) { id, name, email, createdAt } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/graphql",
+					"raw": "{{host}}/graphql",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8080",
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Query Post",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"query\": \"query queryPost($id: Int!) { post(id: $id) { id, title, content, author { name }, createdAt } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/graphql",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
 					"path": [
 						"graphql"
 					]
@@ -138,40 +78,10 @@
 					"raw": "{\n\t\"query\": \"mutation createAuthor($name: String!, $email: String!) { createAuthor(name: $name, email: $email) { id, name, email, createdAt } }\",\n\t\"variables\": {\n\t\t\"name\":  \"Aaron N. Brock\",\n\t\t\"email\": \"Contact@AaronNBrock.com\"\n\t}\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/graphql",
+					"raw": "{{host}}/graphql",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8080",
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Post",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"query\": \"mutation createPost($title: String!, $content: String!, $authorID: Int!) { createPost(title: $title, content: $content, authorID: $authorID) { id, title, content, author { name }, createdAt } }\",\n\t\"variables\": {\n\t\t\"title\":  \"My First Title\",\n\t\t\"content\": \"And this is Content\",\n\t\t\"authorID\": 1\n\t}\n}"
-				},
-				"url": {
-					"raw": "localhost:8080/graphql",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
 					"path": [
 						"graphql"
 					]
@@ -196,11 +106,94 @@
 					"raw": "{\n\t\"query\": \"mutation deleteAuthor($id: Int!) { deleteAuthor(id: $id) }\",\n\t\"variables\": {\n\t\t\"id\":  2\n\t}\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/graphql",
+					"raw": "{{host}}/graphql",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8080",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Posts",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"query { posts { id, title, content, author { name }, createdAt } }\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}/graphql",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"query queryPost($id: Int!) { post(id: $id) { id, title, content, author { name }, createdAt } }\",\n\t\"variables\": {\n\t\t\"id\":  1\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{host}}/graphql",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"mutation createPost($title: String!, $content: String!, $authorID: Int!) { createPost(title: $title, content: $content, authorID: $authorID) { id, title, content, author { name }, createdAt } }\",\n\t\"variables\": {\n\t\t\"title\":  \"My First Title\",\n\t\t\"content\": \"And this is Content\",\n\t\t\"authorID\": 1\n\t}\n}"
+				},
+				"url": {
+					"raw": "{{host}}/graphql",
+					"host": [
+						"{{host}}"
+					],
 					"path": [
 						"graphql"
 					]
@@ -225,17 +218,46 @@
 					"raw": "{\n\t\"query\": \"mutation deletePost($id: Int!) { deletePost(id: $id) }\",\n\t\"variables\": {\n\t\t\"id\":  2\n\t}\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/graphql",
+					"raw": "{{host}}/graphql",
 					"host": [
-						"localhost"
+						"{{host}}"
 					],
-					"port": "8080",
 					"path": [
 						"graphql"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "ef1c1d44-63f7-4c83-b767-54aa4ec1a9fc",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0a144450-23ce-4cd9-a0e2-96315cbcd255",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "682940db-138f-4cea-b624-11ebe7ae1b47",
+			"key": "host",
+			"value": "localhost:8080",
+			"type": "string"
 		}
 	]
 }
