@@ -82,4 +82,4 @@ docker run --rm --network "host" jbergknoff/postgresql-client postgresql://$user
 current_directory=$(pwd -W 2> /dev/null || pwd)
 
 # Init table database scheme.
-docker run --rm --network "host" -v $current_directory/init-db.sql:/init-db.sql jbergknoff/postgresql-client postgresql://$new_username:$new_password@$host:$port -f init-db.sql
+docker run --rm --network "host" -v $current_directory/initdb.sql:/initdb.sql jbergknoff/postgresql-client postgresql://$new_username:$new_password@$host:$port -f initdb.sql
