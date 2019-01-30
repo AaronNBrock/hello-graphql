@@ -1,4 +1,4 @@
-package hellographql
+package main
 
 import (
 	"database/sql"
@@ -30,6 +30,15 @@ type Post struct {
 }
 
 var graphqlHandler http.Handler
+
+var (
+	dbHost  string
+	dbPort  string
+	dbUser  string
+	dbPass  string
+	dbName  string
+	appPort string
+)
 
 func checkErr(err error) {
 	if err != nil {
@@ -173,11 +182,14 @@ func queryPosts(db *sql.DB) ([]*Post, error) {
 
 func init() {
 	// Define defaults
-	dbHost := "localhost"
-	dbPort := "5432"
-	dbUser := "graphql"
-	dbPass := "password"
-	dbName := "graphql"
+	dbHost  = "localhost"
+	dbPort  = "5432"
+	dbUser  = "graphql"
+	dbPass  = "password"
+	dbName  = "graphql"
+
+	appPort = "8080"
+
 
 	if env := os.Getenv("DB_HOST"); env != "" {
 		dbHost = env
@@ -193,6 +205,10 @@ func init() {
 	}
 	if env := os.Getenv("DB_NAME"); env != "" {
 		dbName = env
+	}
+
+	if env := os.Getenv("APP_PORT"); env != "" {
+		appPort = env
 	}
 
 	dbinfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPass, dbName)
@@ -497,5 +513,8 @@ func GraphqlFunc(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.Handle("/graphql", graphqlHandler)
-	http.ListenAndServe(":8080", nil)
+	
+	fmt.Printf("Starting server server on port %s...\n", appPort)
+	err := http.ListenAndServe(fmt.Sprintf(":%s", appPort), nil)
+	checkErr(err)
 }
