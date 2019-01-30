@@ -15,16 +15,20 @@ PROJECT_NAME := hello-graphql
 
 # ==== RECIPES ====
 
-run: build
+run: build start-db
 	docker run --rm --network host $(PROJECT_NAME)
 
-run-it: build
+run-it: build start-db
 	docker run --rm --network host --entrypoint /bin/sh -it $(PROJECT_NAME) 
 
 start-db:
-	./startdb.sh
+	./testdb.sh --start
 
-reset-run: start-db run
+stop-db:
+	./testdb.sh --stop
+
+reset-db:
+	./startdb.sh --reset
 
 
 # ==== REGISTRY LOGIN CONFIG ====
