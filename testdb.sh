@@ -4,20 +4,22 @@ set -e
 # Defaults
 stop=false
 start=false
+connect=false
 
 # Parse Options
 OPTIONS=hr
-LONGOPTIONS=help,reset,restart,stop,start
+LONGOPTIONS=help,reset,restart,stop,start,connect
 
 USAGE="
 USAGE: ./startdb.sh [OPTIONS]
 
 Options:
  -h  --help       Display this message.
- -r, --reset      Reset the database.
+ -r  --reset      Reset the database.
      --restart    Alies: --reset
      --stop       Stop the database.
-     --start      Start the database.
+     --start      Start the database if not already started.
+ -c  --connect    Connect to the database.
  
 "
 
@@ -46,6 +48,10 @@ while true; do
 			stop=true
 			shift 1
 			;;
+		-c|--connect)
+			connect=true
+			shift 1
+			;;
 		--)
 			shift
 			break
@@ -53,19 +59,53 @@ while true; do
 	esac
 done
 
-if [ $stop = true ]; then
-	docker stop testdb || true
-else if docker run --rm --network "host" --entrypoint sh jbergknoff/postgresql-client -c "pg_isready -h localhost -p 5432 &> /dev/null" ; then
-	echo "Database already running."
-	exit 0
-fi
-fi
+is_running () {
+	docker run --rm --network "host" --entrypoint sh jbergknoff/postgresql-client -c "pg_isready -h localhost -p 5432 &> /dev/null"
+}
 
-if [ $start = true ]; then
+stop_db () {
+	docker stop testdb || true
+}
+
+start_db () {
 	docker run --rm --name testdb -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:10.6
 
 	./initdb.sh --host localhost --port 5432 --username postgres --password password --new-username graphql --new-password password
-else
-	echo "Database not running."
-	exit 0
+}
+
+connect_db () {
+	docker run --rm -it --network "host" -v $current_directory/init-db.sql:/init-db.sql jbergknoff/postgresql-client postgresql://graphql:password@localhost:5432
+}
+
+
+if [ $stop = true ]; then
+	if is_running ; then
+		stop_db
+	else
+		echo "Database already stopped."
+	fi
 fi
+
+if [ $start = true ]; then
+	if is_running ; then
+		echo "Database already running at localhost:5432"
+	else
+		start_db
+	fi
+fi
+
+if [ $connect = true ]; then
+	if is_running ; then
+		connect_db
+	else
+		echo "Database is not running, use './testdb.sh --start' to start it."
+	fi
+fi
+
+if [ $stop = false ] && [ $start = false ] && [ $connect = false ]; then
+	if is_running ; then
+		echo "Database running at localhost:5432"
+	else
+		echo "Database stopped."
+	fi
+fi 
