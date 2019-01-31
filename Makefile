@@ -28,7 +28,10 @@ stop-db:
 	./testdb.sh --stop
 
 reset-db:
-	./startdb.sh --reset
+	./testdb.sh --reset
+
+connect-db:
+	./testdb.sh --connect
 
 
 # ==== REGISTRY LOGIN CONFIG ====
