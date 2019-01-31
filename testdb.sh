@@ -13,11 +13,11 @@ USAGE="
 USAGE: ./startdb.sh [OPTIONS]
 
 Options:
- -h  --help     Display this message.
- -r, --reset    Reset the database.
-     --restart  Alies: --reset
-     --stop     Stop the database.
-     --start    Start the database.
+ -h  --help       Display this message.
+ -r, --reset      Reset the database.
+     --restart    Alies: --reset
+     --stop       Stop the database.
+     --start      Start the database.
  
 "
 
@@ -55,7 +55,7 @@ done
 
 if [ $stop = true ]; then
 	docker stop testdb || true
-else if docker run --rm --network "host" --entrypoint sh jbergknoff/postgresql-client -c "pg_isready -h localhost -p 5432" &> /dev/null ; then
+else if docker run --rm --network "host" --entrypoint sh jbergknoff/postgresql-client -c "pg_isready -h localhost -p 5432 &> /dev/null" ; then
 	echo "Database already running."
 	exit 0
 fi
