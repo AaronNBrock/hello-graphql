@@ -1,12 +1,14 @@
 
 # Ignores files
 .gcloudignore
-.dockerignore
 .git
 .gitignore
 
 # Scripts
-connectdb.sh
+Makefile
+testdb.sh
 initdb.sh
 initdb.sql
+
+# Postman
 *.postman_collection.json
