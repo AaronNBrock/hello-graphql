@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-graphql-pod
+  labels:
+    app: hello-graphql-pod
+spec:
+  containers:
+  - name: hello-graphql
+    image: aaronnbrock/hello-graphql
+    ports:
+    - containerPort: 8080
